@@ -65,7 +65,6 @@ Obstacle.prototype.click = function() {
       console.log("x: " + this.game.position.x + " y: " + this.game.position.y);
       console.log("x: " + Math.floor(event.clientX) + " y: " + Math.floor(event.clientY)
       );
-
       if (
         this.game.ball.y === 550 &&
         this.game.position.x === this.realPosition.x &&
