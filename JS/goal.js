@@ -1,7 +1,8 @@
-function Goal(canvas, map, ball){
+function Goal(canvas, map, ball, game){
     this.ctx = canvas;
     this.ball = ball;
     this.map = map; 
+    this.game = game;
     this.x = 250;
     this.y = 100;
     this.objX = map.gw * 1 + map.adjX;    //x;
@@ -15,21 +16,22 @@ function Goal(canvas, map, ball){
 
 Goal.prototype.draw = function(){ 
     this.ctx.beginPath();
-    this.ctx.fillStyle= this.color
+    this.ctx.fillStyle= "#212F3D"
     this.ctx.arc(this.objX, 140, this.radius, 0, 2 * Math.PI);
     this.ctx.fill();
     this.ctx.closePath();
 }
 
 Goal.prototype.finnish = function(){
-    if(this.ball.x + this.ball.radius <= this.objX +10 && 
+    if(this.ball.x + this.ball.radius <= this.objX + 10 && 
         this.ball.y + this.ball.radius<= this.objY + this.radius){
           
-          this.counter++
-          alert("you win " + this.counter)
-
-          
+          this.game.levelCounter =1 
+          this.ball.x = 250;
+          this.ball.y = 550;
+          this.ball.vy = 0
+          this.ball.vx = 0 
         
     }
-    console.log(this.counter)
+
 }

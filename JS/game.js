@@ -17,14 +17,13 @@ Game.prototype.start = function() {
  
    var level = [
     [
-    this.obstacle = new Obstacle(this.ctx, map, this.ball, this, 5, 3)
+    this.obstacle = new Obstacle(this.ctx, map, this.ball, this, 5, 3,"a")
     ],
 
     [
-     this.obstacle = new Obstacle(this.ctx,map, this.ball, this, 5,5),
-     this.obstacle = new Obstacle(this.ctx, map, this.ball, this,5,8)
+    this.obstacle1 = new Obstacle(this.ctx,map, this.ball, this, 5,3,"b"),
+    this.obstacle2 = new Obstacle(this.ctx, map, this.ball, this,5,6,"a")
     ]
-
   ];
 
   setInterval(
@@ -34,40 +33,18 @@ Game.prototype.start = function() {
       goal.finnish();
       this.ball.startMove();
       this.ball.drawBall();
-      level[this.levelCounter].forEach(function(x){
-
-          x.draw();
-          x.colapse()
-          
+      this.ball.moveBall();
+      level[this.levelCounter].forEach(function(obs, i, arr){
+          obs.draw();
+          obs.colapse()
+          obs.click()
       }.bind(this))
-      this.click();
-    //   this.obstacle.colapse()
+   
+      
+      
     }.bind(this),
     1000 / 60
   );
-
-  
-};
-Game.prototype.click = function() {
-  this.canvas.onmouseup = function(event) {
-    this.position.x = Math.floor(event.clientX / this.gw);
-    this.position.y = Math.floor(event.clientY / this.gh);
-    console.log("x: " + this.position.x + " y: " + this.position.y);
-    console.log(
-      "x: " + Math.floor(event.clientX) + " y: " + Math.floor(event.clientY)
-    );
-    if (
-      this.ball.y === 550 &&
-      this.position.x === this.obstacle.realPosition.x &&
-      this.position.y === this.obstacle.realPosition.y
-    ) {
-      if (this.obstacle.position === "a") {
-        this.obstacle.position = "b";
-      } else {
-        this.obstacle.position = "a";
-      }
-    }
-  }.bind(this);
 };
 
 Game.prototype.clearAll = function() {
