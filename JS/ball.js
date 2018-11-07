@@ -1,7 +1,7 @@
 function Ball(canvas, game) {
   this.ctx = canvas;
   this.game = game;
-  this.x = 250;
+  this.x = 255;
   this.y = 550;
   this.vx = 0;
   this.vy = 0;
@@ -18,7 +18,8 @@ Ball.prototype.drawBall = function() {
 };
 
 Ball.prototype.moveBall = function() {
-  this.y -= this.vy;
+  this.y += this.vy;
+  this.x += this.vx;
 
   if (
     this.y + this.radius < 0 ||
@@ -36,7 +37,7 @@ Ball.prototype.startMove = function() {
   document.onkeydown = function(event) {
     if (event.keyCode === SPACE) {
       this.vy = 0;
-      this.vy = 5;
+      this.vy = -5;
     }
   }.bind(this);
 };

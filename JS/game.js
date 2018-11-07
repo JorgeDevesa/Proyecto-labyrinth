@@ -15,10 +15,14 @@ function Game(canvasId) {
     [
     new Obstacle(this.ctx, this.map, this.ball, this, 5, 3,"a")
     ],
-
     [
-      new Obstacle(this.ctx, this.map, this.ball, this,5,6,"a"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 5,3,"a")
+      new Obstacle(this.ctx, this.map, this.ball, this,8,3,"a"),
+      new Obstacle(this.ctx,this.map, this.ball, this, 5,3,"b")
+    ],
+    [
+      new Obstacle(this.ctx, this.map, this.ball, this,1,6,"a"),
+      new Obstacle(this.ctx,this.map, this.ball, this, 5,8,"b"),
+      new Obstacle(this.ctx,this.map, this.ball, this, 3,3,"b")
     ]
   ];
 }
@@ -26,10 +30,10 @@ function Game(canvasId) {
 Game.prototype.clickColapse = function(obs,i) {
     if (
       this.ball.y === 550 &&
-      this.position.x === obs.realPosition.x &&
-      this.position.y === obs.realPosition.y
+      (this.position.x)=== obs.realPosition.x &&
+      (this.position.y) === obs.realPosition.y
     ) {
-      console.log(this.level[this.levelCounter][i].position)
+      // console.log(this.level[this.levelCounter][i].position)
       if (this.level[this.levelCounter][i].position === "a") {
         this.level[this.levelCounter][i].position = "b"
       } else { 
@@ -47,11 +51,10 @@ Game.prototype.start = function() {
     function() {
       if(this.canvas!==undefined){
         this.canvas.onmouseup = function(event) {
-          this.position.x = Math.floor(event.clientX / this.gw);
-          this.position.y = Math.floor(event.clientY / this.gh);
-          console.log("x: " + this.position.x, " y: " + this.position.y);
-          console.log("x: " + Math.floor(event.clientX) + " y: " + Math.floor(event.clientY)
-          );
+          this.position.x = Math.floor((event.clientX - 468)/ this.gw);
+          this.position.y = Math.floor((event.clientY - 92)/ this.gh);
+          // console.log("x: " + (this.position.x - 10), " y: " + (this.position.y - 2));
+          console.log("x: " + (Math.floor((event.clientX - 462)/ this.gw)) + " y: " + (Math.floor((event.clientY - 101)/ this.gh)));
         }.bind(this);
       }
       this.clearAll();
@@ -66,9 +69,11 @@ Game.prototype.start = function() {
           obs.draw(obs.position);
           obs.colapse()
         }.bind(this))
+        // console.log(this.ball.vx)
       }.bind(this),
       1000 / 60
       );
+   
 };
 
 Game.prototype.clearAll = function() {
