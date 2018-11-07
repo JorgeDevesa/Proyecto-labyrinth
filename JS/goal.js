@@ -24,8 +24,7 @@ Goal.prototype.draw = function(){
 
 Goal.prototype.finnish = function(){
     if(this.ball.x + this.ball.radius <= this.objX + 10 && 
-        this.ball.y + this.ball.radius<= this.objY + this.radius){
-          
+        this.ball.y + this.ball.radius<= this.objY + this.radius+50){          
           this.game.levelCounter =1 
           this.ball.x = 250;
           this.ball.y = 550;
