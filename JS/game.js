@@ -18,7 +18,7 @@ function Game(canvasId) {
 
     [
       new Obstacle(this.ctx, this.map, this.ball, this,5,6,"a"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 5,3,"b")
+      new Obstacle(this.ctx,this.map, this.ball, this, 5,3,"a")
     ]
   ];
 }
@@ -29,13 +29,15 @@ Game.prototype.clickColapse = function(obs,i) {
       this.position.x === obs.realPosition.x &&
       this.position.y === obs.realPosition.y
     ) {
-      console.log(i)
-      if (this.obstacle.position === "a") {
-        this.obstacle.position = "b";
+      console.log(this.level[this.levelCounter][i].position)
+      if (this.level[this.levelCounter][i].position === "a") {
+        this.level[this.levelCounter][i].position = "b"
       } else { 
-        this.obstacle.position = "a";
+        this.level[this.levelCounter][i].position = "a"
       }
-    }
+      this.position.x = 0
+      this.position.y = 0
+}
 }
 
 Game.prototype.start = function() {
@@ -58,9 +60,10 @@ Game.prototype.start = function() {
       this.ball.startMove();
       this.ball.drawBall();
       this.ball.moveBall();
+      
       this.level[this.levelCounter].forEach(function(obs,i){
           this.clickColapse(obs,i);
-          obs.draw();
+          obs.draw(obs.position);
           obs.colapse()
         }.bind(this))
       }.bind(this),
