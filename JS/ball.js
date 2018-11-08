@@ -1,12 +1,14 @@
-function Ball(canvas, game) {
+function Ball(canvas, game,counter) {
   this.ctx = canvas;
   this.game = game;
-  this.x = 255;
+  this.counter = counter;
+  this.x = 260;
   this.y = 550;
   this.vx = 0;
   this.vy = 0;
   this.radius = 15;
   this.color = "red";
+
 }
 
 Ball.prototype.drawBall = function() {
@@ -43,5 +45,32 @@ Ball.prototype.startMove = function() {
 };
 
 Ball.prototype.reset = function() {
-  document.location.reload();
+
+  if(this.game.levelCounter > 0){
+    alert("That's not de goal! Play again?")
+    this.game.counterDown = 0
+    this.game.counterDown += 10;
+    this.x = 260;
+    this.y = 550;
+    this.vx = 0;
+    this.vy = 0;
+  }
+  else{
+    alert("That's not de goal! Play again?")
+document.location.reload();
+  }
+
 };
+
+Ball.prototype.resetCounterDown = function(){
+  if(this.game.counterDown === 0){
+    this.game.counterDown = 0
+    this.game.counterDown = 10;
+    this.x = 260;
+    this.y = 550;
+    this.vx = 0;
+    this.vy = 0;
+    alert("out of time! Play again?")
+    
+  }
+}

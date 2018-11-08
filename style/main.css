@@ -4,8 +4,29 @@ body{
 #myCanvas{
  margin: 0; 
  border: 1px solid black;
- background-color: #37474F;
+ /* background-color: #154360; */
+ background-image: url("../images/fondo-cuadrados.png");
  position: absolute;
  margin-left:469px;
  margin-top:100px;
 }
+div{
+    background-image: url("/images/fondo.jpg");
+    width:504px;
+    height: 650px;
+    position:absolute;
+    margin-left:470px;
+    margin-top:100px;
+}
+
+
+.start-image{
+    width:200px;
+    height:200px;
+    position: absolute;  
+    margin-left: -350px;
+    margin-top: 100px;
+}
+
+
+

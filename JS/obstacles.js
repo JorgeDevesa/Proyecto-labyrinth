@@ -6,14 +6,14 @@ function Obstacle(canvas, map, ball, game, x, y, p) {
   this.realPosition = { x: x, y: y };
   this.radius = 7;
   this.objW = 50; //w;
-  this.objH = 15; //h;
+  this.objH = 10; //h;
   this.position = p;
   this.ball = ball;
   // console.log("this.objX: " + this.objX + " this.objY: " + this.objY +" this.ObjW: " + this.objW + " this.objH: ")
 }
 Obstacle.prototype.rectangle = function(ctx, x, y, width, height, radius, color,rotation) {
-  ctx.beginPath();
   ctx.save();
+  ctx.beginPath();
   ctx.translate(x + width/2,y + height/2);
   ctx.rotate(rotation);
   ctx.translate(-(x + width/2), -(y +height/2))
@@ -28,8 +28,8 @@ Obstacle.prototype.rectangle = function(ctx, x, y, width, height, radius, color,
   ctx.lineTo(x + radius, y);
   ctx.quadraticCurveTo(x, y, x, y + radius);
   ctx.stroke();
-  ctx.restore();
   ctx.closePath();
+  ctx.restore();
 };
 Obstacle.prototype.draw = function(position) {
   // console.log(position)
@@ -61,8 +61,8 @@ Obstacle.prototype.draw = function(position) {
 Obstacle.prototype.colapse = function() {
   if (
     this.ball.x + this.ball.radius >= this.objX &&
-    this.objX + this.objW >= this.ball.x &&
-    this.ball.y + this.ball.radius >= this.objY + this.objH &&
+    this.objX + this.objW +10 >= this.ball.x &&
+    this.ball.y + this.ball.radius >= this.objY &&
     this.objY + this.objH >= this.ball.y - this.ball.radius
   ) {
     if (this.position === "a" && this.ball.vy === -5 && this.ball.vx === 0) {
@@ -77,7 +77,7 @@ Obstacle.prototype.colapse = function() {
     ) {
       this.ball.vx = 5;
       this.ball.vy = 0;
-      this.ball.y++;
+      // this.ball.y++;
 
     } else if (
       this.position === "a" &&
@@ -86,8 +86,7 @@ Obstacle.prototype.colapse = function() {
     ) {
       this.ball.vx = 0;
       this.ball.vy = 5;
-      
-
+      this.ball.x -= 2
     } else if (
       this.position === "a" &&
       this.ball.vy === 0 &&
@@ -118,8 +117,8 @@ Obstacle.prototype.colapse = function() {
       this.ball.vx === 5
     ) {
       this.ball.vx = 0;
-      this.ball.vy = 5;
-      this.ball.x++;
+      this.ball.vy = -5;
+      this.ball.x +=2;
 
     } else if (
       this.position === "b" &&
