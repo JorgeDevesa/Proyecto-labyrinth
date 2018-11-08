@@ -1,6 +1,7 @@
 function Game(canvasId) {
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
+  //todo: consider removing hardcoded values, and use GameConfig object instead
   this.mapX = 11;
   this.mapY = 15; //15
   this.gw = 500 / this.mapX;
@@ -9,84 +10,90 @@ function Game(canvasId) {
   this.obstacle = {};
   this.levelCounter = 0;
   this.counterDown = 7;
-  this.ball = new Ball(this.ctx, this, this.counter,); 
+  this.ball = new Ball(this.ctx, this, this.counter); 
   this.map = new Map(this.ctx);
   this.counter = new Counter(this.ctx, this,this.ball, this.counterDown);
   this.goal = new Goal(this.ctx, this.map, this.ball, this, this.counter);
+  //todo: consider extracting this code into a config file
+  console.log(this.level)
   this.level = [
     [
-     
-      new Obstacle(this.ctx, this.map, this.ball, this, 5, 1,"b")
 
+      new Obstacle(this.ctx, this.map, this.ball, this, 5, 1,"b", 50),
+      new Obstacle(this.ctx, this.map, this.ball, this, 1, 6,"c", 100,5,0,)
+      
     ],
     [
-      new Obstacle(this.ctx, this.map, this.ball, this,5,7,"a"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 9,8,"b"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 9,1,"b")
+      new Obstacle(this.ctx, this.map, this.ball, this,5,7,"a", 50),
+      new Obstacle(this.ctx,this.map, this.ball, this, 9,7.1,"b",50),
+      // new Obstacle(this.ctx,this.map, this.ball, this, 9,1,"b",50)
     ],
     [
-      new Obstacle(this.ctx, this.map, this.ball, this,1,8,"a"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 5,7,"b"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 1,3,"b"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 4,3,"b"),
-      new Obstacle(this.ctx,this.map, this.ball, this, 5,1,"b")
+      new Obstacle(this.ctx, this.map, this.ball, this,1,8,"a",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, 5,7,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, 1,3,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, 4,3,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, 5,1,"b",50)
     ],
-    
+  
   ];
 }
-console.log(this.levelCounter)
+
+//todo: please consider moving this into de Obstacle class
 Game.prototype.clickColapse = function(obs,i) {
-    if (
-      this.ball.y === 550 &&
-      (this.position.x)=== obs.realPosition.x &&
-      (this.position.y) === obs.realPosition.y
+  if (
+    this.ball.y === 550 &&
+    (this.position.x)=== obs.realPosition.x &&
+    (this.position.y) === obs.realPosition.y
     ) {
       // console.log(this.level[this.levelCounter][i].position)
       if (this.level[this.levelCounter][i].position === "a") {
         this.level[this.levelCounter][i].position = "b"
-      } else { 
+      } else if(this.level[this.levelCounter][i].position === "b"){ 
         this.level[this.levelCounter][i].position = "a"
       }
       this.position.x = 0
       this.position.y = 0
-}
-}
-
-Game.prototype.start = function() {
-  this.counter.draw()
-  this.counter.counterDown()
-  setInterval(
-
-    function() {
-            if(this.canvas!==undefined){ ///////// Refactorizar
-              this.canvas.onmouseup = function(event) {
-                this.position.x = Math.floor((event.clientX - 468)/ this.gw);
-                this.position.y = Math.floor((event.clientY - 92)/ this.gh);
-                // console.log("x: " + (this.position.x - 10), " y: " + (this.position.y - 2));
-                console.log("x: " + (Math.floor((event.clientX - 462)/ this.gw)) + " y: " + (Math.floor((event.clientY - 101)/ this.gh)));
-              }.bind(this);   
-            }                           /////////// hasta aquí
-
-      this.clearAll();
-      this.counter.draw()
-      this.goal.draw();
-      this.goal.finnish();
-      this.ball.startMove();
-      this.ball.drawBall();
-      this.ball.moveBall();
+    }
+  }
+  
+  Game.prototype.start = function() {
+    this.counter.draw()
+    this.counter.counterDown()
+    setInterval(
       
-      this.level[this.levelCounter].forEach(function(obs,i){
+      //todo: consider adding a MouseManager object
+      function() {
+        if(this.canvas!==undefined){ ///////// Refactorizar
+          this.canvas.onmouseup = function(event) {
+            this.position.x = Math.floor((event.clientX - 468)/ this.gw);
+            this.position.y = Math.floor((event.clientY - 92)/ this.gh);
+            // console.log("x: " + (this.position.x - 10), " y: " + (this.position.y - 2));
+            // console.log("x: " + (Math.floor((event.clientX - 462)/ this.gw)) + " y: " + (Math.floor((event.clientY - 101)/ this.gh)));
+          }.bind(this);   
+        }                           /////////// hasta aquí
+        
+        this.clearAll();
+        this.counter.draw()
+        this.goal.draw();
+        this.goal.finnish();
+        this.ball.startMove();
+        this.ball.drawBall();
+        this.ball.moveBall();
+        this.level[this.levelCounter].forEach(function(obs,i,c){
           this.clickColapse(obs,i);
+          new Colision(this.ctx,this.ball, obs)
+          .bottom()
           obs.draw(obs.position);
-          obs.colapse()
         }.bind(this))
-        // console.log(this.ball.vx)
       }.bind(this),
       1000 / 60
       );
    
 };
-
+console.log(this.levelCounter)
 Game.prototype.clearAll = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
+
+

@@ -28,7 +28,7 @@ Goal.prototype.finnish = function(){
         this.ball.y + this.ball.radius<= this.objY + this.radius+50){          
           this.game.levelCounter++
           this.game.counterDown = 10
-          console.log(this.game.counterDown)
+          console.log(this.game.levelCounter)
           this.ball.x = 250;
           this.ball.y = 550;
           this.ball.vy = 0

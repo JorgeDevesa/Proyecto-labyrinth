@@ -1,40 +1,29 @@
-function Obstacle(canvas, map, ball, game, x, y, p) {
+function Obstacle(canvas, map, ball, game, x, y, p,w, vx,vy) {
   this.game = game;
   this.ctx = canvas;
   this.objX = this.game.gw * x;
   this.objY = this.game.gh * y; // + map.adjY; //y;
   this.realPosition = { x: x, y: y };
   this.radius = 7;
-  this.objW = 50; //w;
+  this.objW = w; //w;
   this.objH = 10; //h;
   this.position = p;
   this.ball = ball;
+  this.vx = vx;
+  this.vy = vy;
+  this.drawObstacles = new DrawObstacles(this.ctx, this.ball,this)
+console.log(this.realPosition.x +" " +this.realPosition.y)
+  this.status = false;
+
+  // this.colisions = new Colisions(this.ctx, this.ball, this)
   // console.log("this.objX: " + this.objX + " this.objY: " + this.objY +" this.ObjW: " + this.objW + " this.objH: ")
 }
-Obstacle.prototype.rectangle = function(ctx, x, y, width, height, radius, color,rotation) {
-  ctx.save();
-  ctx.beginPath();
-  ctx.translate(x + width/2,y + height/2);
-  ctx.rotate(rotation);
-  ctx.translate(-(x + width/2), -(y +height/2))
-  ctx.moveTo(x, y + radius);
-  ctx.strokeStyle = color;
-  ctx.lineTo(x, y + height - radius);
-  ctx.quadraticCurveTo(x, y + height, x + radius, y + height);
-  ctx.lineTo(x + width - radius, y + height);
-  ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
-  ctx.lineTo(x + width, y + radius);
-  ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
-  ctx.lineTo(x + radius, y);
-  ctx.quadraticCurveTo(x, y, x, y + radius);
-  ctx.stroke();
-  ctx.closePath();
-  ctx.restore();
-};
+
 Obstacle.prototype.draw = function(position) {
+
   // console.log(position)
   if (position === "a") {
-    this.rectangle(
+    this.drawObstacles.fixedObstacles(
       this.ctx,
       this.objX,
       this.objY,
@@ -45,92 +34,104 @@ Obstacle.prototype.draw = function(position) {
       (Math.PI/180)*45
     );
   } else if (position === "b") {
-    this.rectangle(
+    this.drawObstacles.fixedObstacles(
       this.ctx,
       this.objX,
       this.objY,
       this.objW,
       this.objH,
       7,
-      "red",
+      "#03A9F4",
       (Math.PI/180)*135
     );
   }
-};
-
-Obstacle.prototype.colapse = function() {
-  if (
-    this.ball.x + this.ball.radius >= this.objX &&
-    this.objX + this.objW +10 >= this.ball.x &&
-    this.ball.y + this.ball.radius >= this.objY &&
-    this.objY + this.objH >= this.ball.y - this.ball.radius
-  ) {
-    if (this.position === "a" && this.ball.vy === -5 && this.ball.vx === 0) {
-      this.ball.vx = -5;
-      this.ball.vy = 0;
-      this.ball.y++;
-
-    } else if (
-      this.position === "a" &&
-      this.ball.vy === 5 &&
-      this.ball.vx === 0
-    ) {
-      this.ball.vx = 5;
-      this.ball.vy = 0;
-      // this.ball.y++;
-
-    } else if (
-      this.position === "a" &&
-      this.ball.vy === 0 &&
-      this.ball.vx === 5
-    ) {
-      this.ball.vx = 0;
-      this.ball.vy = 5;
-      this.ball.x -= 2
-    } else if (
-      this.position === "a" &&
-      this.ball.vy === 0 &&
-      this.ball.vx === -5
-    ) {
-      this.ball.vx = 0;
-      this.ball.vy = -5;
-      this.ball.x--;
-    }
-
-    if (this.position === "b" && this.ball.vy === 5 && this.ball.vx === 0) {
-      this.ball.vx = -5;
-      this.ball.vy = 0;
-      this.ball.y++;
-
-    } else if (
-      this.position === "b" &&
-      this.ball.vy === -5 &&
-      this.ball.vx === 0
-    ) {
-      this.ball.vx = 5;
-      this.ball.vy = 0;
-      this.ball.y++;
-
-    } else if (
-      this.position === "b" &&
-      this.ball.vy === 0 &&
-      this.ball.vx === 5
-    ) {
-      this.ball.vx = 0;
-      this.ball.vy = -5;
-      this.ball.x +=2;
-
-    } else if (
-      this.position === "b" &&
-      this.ball.vy === 0 &&
-      this.ball.vx === -5
-    ) {
-      this.ball.vx = 0;
-      this.ball.vy = -5;
-      this.ball.x--;
+  else if (position === "c") {
+    this.drawObstacles.motionObstacles(
+      this.ctx,
+      this.objX,
+      this.objY,
+      this.objW,
+      this.objH,
+      7,
+      "#D32F2F",
+      this.vx,
+      this.vy
+    );
+    this.drawObstacles.moveObstacles(this)
     }
   }
-};
 
-// console.log("this.ball.y + radius: " + (this.objY + this.objH))
-// console.log("vx "+this.ball.vx + " " + this.ball.vy)
+// Obstacle.prototype.colapse = function() {
+//   if (
+//     this.ball.x + this.ball.radius >= this.objX &&
+//     this.objX + this.objW +10 >= this.ball.x &&
+//     this.ball.y + this.ball.radius >= this.objY &&
+//     this.objY + this.objH >= this.ball.y - this.ball.radius
+//   ) {
+//     if (this.position === "a" && this.ball.vy === -5 && this.ball.vx === 0) {
+//       this.ball.vx = -5;
+//       this.ball.vy = 0;
+//       this.ball.y++;
+    
+//     } else if (
+//       this.position === "a" &&
+//       this.ball.vy === 5 &&
+//       this.ball.vx === 0
+//     ) {
+//       this.ball.vx = 5;
+//       this.ball.vy = 0;
+//     }
+//     } else if (
+//       this.position === "a" &&
+//       this.ball.vy === 0 &&
+//       this.ball.vx === 5
+//     ) {
+//       this.ball.vx = 0;
+//       this.ball.vy = 5;
+//       this.ball.x -= 2
+//     } else if (
+//       this.position === "a" &&
+//       this.ball.vy === 0 &&
+//       this.ball.vx === -5
+//     ) {
+//       this.ball.vx = 0;
+//       this.ball.vy = -5;
+//       this.ball.x--;
+//     }
+
+//     if (this.position === "b" && this.ball.vy === 5 && this.ball.vx === 0) {
+//       this.ball.vx = -5;
+//       this.ball.vy = 0;
+//       this.ball.y++;
+
+//     } else if (
+//       this.position === "b" &&
+//       this.ball.vy === -5 &&
+//       this.ball.vx === 0
+//     ) {
+//       this.ball.vx = 5;
+//       this.ball.vy = 0;
+//       this.ball.y++;
+
+//     } else if (
+//       this.position === "b" &&
+//       this.ball.vy === 0 &&
+//       this.ball.vx === 5
+//     ) {
+//       this.ball.vx = 0;
+//       this.ball.vy = -5;
+//       this.ball.x +=2;
+
+//     } else if (
+//       this.position === "b" &&
+//       this.ball.vy === 0 &&
+//       this.ball.vx === -5
+//     ) {
+//       this.ball.vx = 0;
+//       this.ball.vy = -5;
+//       this.ball.x--;
+//     }
+  
+// };
+
+
