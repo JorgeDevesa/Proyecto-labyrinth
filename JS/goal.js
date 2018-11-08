@@ -10,7 +10,7 @@ function Goal(canvas, map, ball, game,counter){
     this.objW = 45;    //w;
     this.objH = 5;     //h;
     this.radius = 20;
-    position = ["a","b"]
+    position = ["a","b","c"]
     this.color = "red";
     this.counter = counter
 }
@@ -34,5 +34,4 @@ Goal.prototype.finnish = function(){
           this.ball.vy = 0
           this.ball.vx = 0 
     }
-
 }

@@ -44,7 +44,11 @@ Ball.prototype.startMove = function() {
   }.bind(this);
 };
 
-Ball.prototype.reset = function() {
+
+///////////////////////
+
+
+Ball.prototype.reset = function() {           ////////refactorizar en clase a parte  (las dos siguienters)
 
   if(this.game.levelCounter > 0){
     alert("That's not de goal! Play again?")
@@ -70,7 +74,7 @@ Ball.prototype.resetCounterDown = function(){
     this.y = 550;
     this.vx = 0;
     this.vy = 0;
-    alert("out of time! Play again?")
+    // alert("out of time! Play again?")
     
   }
 }

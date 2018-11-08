@@ -1,6 +1,8 @@
 function Game(canvasId) {
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
+
+  //todo: consider removing hardcoded values, and use GameConfig object instead
   this.mapX = 11;
   this.mapY = 15; //15
   this.gw = 500 / this.mapX;
@@ -13,10 +15,12 @@ function Game(canvasId) {
   this.map = new Map(this.ctx);
   this.counter = new Counter(this.ctx, this,this.ball, this.counterDown);
   this.goal = new Goal(this.ctx, this.map, this.ball, this, this.counter);
+  //todo: consider extracting this code into a config file
   this.level = [
     [
      
-      new Obstacle(this.ctx, this.map, this.ball, this, 5, 1,"b")
+      new Obstacle(this.ctx, this.map, this.ball, this, 5, 1,"b"),
+      new Obstacle(this.ctx, this.map, this.ball, this, 1, 6,"c", 5,0)
 
     ],
     [
@@ -35,6 +39,7 @@ function Game(canvasId) {
   ];
 }
 
+//todo: please consider moving this into de Obstacle class
 Game.prototype.clickColapse = function(obs,i) {
     if (
       this.ball.y === 550 &&
@@ -44,7 +49,7 @@ Game.prototype.clickColapse = function(obs,i) {
       // console.log(this.level[this.levelCounter][i].position)
       if (this.level[this.levelCounter][i].position === "a") {
         this.level[this.levelCounter][i].position = "b"
-      } else { 
+      } else if(this.level[this.levelCounter][i].position === "b"){ 
         this.level[this.levelCounter][i].position = "a"
       }
       this.position.x = 0
@@ -57,6 +62,7 @@ Game.prototype.start = function() {
   this.counter.counterDown()
   setInterval(
 
+     //todo: consider adding a MouseManager object
     function() {
             if(this.canvas!==undefined){ ///////// Refactorizar
               this.canvas.onmouseup = function(event) {
@@ -74,6 +80,7 @@ Game.prototype.start = function() {
       this.ball.startMove();
       this.ball.drawBall();
       this.ball.moveBall();
+ 
       
       this.level[this.levelCounter].forEach(function(obs,i){
           this.clickColapse(obs,i);

@@ -1,4 +1,4 @@
-function Obstacle(canvas, map, ball, game, x, y, p) {
+function Obstacle(canvas, map, ball, game, x, y, p, vx,vy) {
   this.game = game;
   this.ctx = canvas;
   this.objX = this.game.gw * x;
@@ -9,32 +9,19 @@ function Obstacle(canvas, map, ball, game, x, y, p) {
   this.objH = 10; //h;
   this.position = p;
   this.ball = ball;
+  this.drawObstacles = new DrawObstacles(this.ctx)
+  this.xMotion = this.game.gw * x;
+  this.yMotion = this.game.gw * y;
+  this.vxMotion = vx;
+  this.vyMotion = vy;
   // console.log("this.objX: " + this.objX + " this.objY: " + this.objY +" this.ObjW: " + this.objW + " this.objH: ")
 }
-Obstacle.prototype.rectangle = function(ctx, x, y, width, height, radius, color,rotation) {
-  ctx.save();
-  ctx.beginPath();
-  ctx.translate(x + width/2,y + height/2);
-  ctx.rotate(rotation);
-  ctx.translate(-(x + width/2), -(y +height/2))
-  ctx.moveTo(x, y + radius);
-  ctx.strokeStyle = color;
-  ctx.lineTo(x, y + height - radius);
-  ctx.quadraticCurveTo(x, y + height, x + radius, y + height);
-  ctx.lineTo(x + width - radius, y + height);
-  ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
-  ctx.lineTo(x + width, y + radius);
-  ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
-  ctx.lineTo(x + radius, y);
-  ctx.quadraticCurveTo(x, y, x, y + radius);
-  ctx.stroke();
-  ctx.closePath();
-  ctx.restore();
-};
+
 Obstacle.prototype.draw = function(position) {
+
   // console.log(position)
   if (position === "a") {
-    this.rectangle(
+    this.drawObstacles.fixedObstacles(
       this.ctx,
       this.objX,
       this.objY,
@@ -45,19 +32,37 @@ Obstacle.prototype.draw = function(position) {
       (Math.PI/180)*45
     );
   } else if (position === "b") {
-    this.rectangle(
+    this.drawObstacles.fixedObstacles(
       this.ctx,
       this.objX,
       this.objY,
       this.objW,
       this.objH,
       7,
-      "red",
+      "#03A9F4",
       (Math.PI/180)*135
     );
   }
-};
+  else if (position === "c") {
+    this.drawObstacles.motionObstacles(
+      this.ctx,
+      this.xMotion,
+      this.yMotion,
+      this.objW,
+      this.objH,
+      7,
+      "#D32F2F",
+      this.vxMotion,
+      this.vyMotion
+    );
+    this.drawObstacles.moveObstacles(this)
+    console.log(this.xMotion)
+    }
+  }
 
+
+  //todo: consider using a CollisionChecker class
+  //CollisionChecker.check(ball, objX, obY)º
 Obstacle.prototype.colapse = function() {
   if (
     this.ball.x + this.ball.radius >= this.objX &&
