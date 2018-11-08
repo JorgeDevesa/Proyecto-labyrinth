@@ -34,7 +34,7 @@ function Game(canvasId) {
     
   ];
 }
-
+console.log(this.levelCounter)
 Game.prototype.clickColapse = function(obs,i) {
     if (
       this.ball.y === 550 &&

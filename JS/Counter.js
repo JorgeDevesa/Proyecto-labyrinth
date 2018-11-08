@@ -18,6 +18,6 @@ Counter.prototype.counterDown = function(){
         this.game.counterDown--
 
         this.ball.resetCounterDown()
-        console.log(this.game.counterDown)
+        // console.log(this.game.counterDown)
     }.bind(this),1000)
 }
