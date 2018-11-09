@@ -1,4 +1,4 @@
-function Obstacle(canvas, map, ball, game, x, y, p,w, vx,vy) {
+function Obstacle(canvas, map, ball, game, status,x, y, p,w, vx,vy) {
   this.game = game;
   this.ctx = canvas;
   this.objX = this.game.gw * x;
@@ -13,7 +13,7 @@ function Obstacle(canvas, map, ball, game, x, y, p,w, vx,vy) {
   this.vy = vy;
   this.drawObstacles = new DrawObstacles(this.ctx, this.ball,this)
 console.log(this.realPosition.x +" " +this.realPosition.y)
-  this.status = false;
+  this.status = status;
 
   // this.colisions = new Colisions(this.ctx, this.ball, this)
   // console.log("this.objX: " + this.objX + " this.objY: " + this.objY +" this.ObjW: " + this.objW + " this.objH: ")

@@ -6,9 +6,8 @@ function Ball(canvas, game,counter) {
   this.y = 550;
   this.vx = 0;
   this.vy = 0;
-  this.radius = 15;
+  this.radius = 5;
   this.color = "red";
-
 }
 
 Ball.prototype.drawBall = function() {
@@ -38,7 +37,6 @@ var SPACE = 32;
 Ball.prototype.startMove = function() {
   document.onkeydown = function(event) {
     if (event.keyCode === SPACE) {
-      this.vy = 0;
       this.vy = -5;
     }
   }.bind(this);
@@ -70,7 +68,8 @@ Ball.prototype.resetCounterDown = function(){
     this.y = 550;
     this.vx = 0;
     this.vy = 0;
+    // this.obstacle.status = false
+    }
     // alert("out of time! Play again?")
     
   }
-}

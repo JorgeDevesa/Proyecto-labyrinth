@@ -19,21 +19,21 @@ function Game(canvasId) {
   this.level = [
     [
 
-      new Obstacle(this.ctx, this.map, this.ball, this, 5, 1,"b", 50),
-      new Obstacle(this.ctx, this.map, this.ball, this, 1, 6,"c", 100,5,0,)
+      new Obstacle(this.ctx, this.map, this.ball, this,false, 5, 1,"b", 50),
+      new Obstacle(this.ctx, this.map, this.ball, this, false, 1, 6,"c", 100,5,0,)
       
     ],
     [
-      new Obstacle(this.ctx, this.map, this.ball, this,5,7,"a", 50),
-      new Obstacle(this.ctx,this.map, this.ball, this, 9,7.1,"b",50),
-      // new Obstacle(this.ctx,this.map, this.ball, this, 9,1,"b",50)
+      new Obstacle(this.ctx, this.map, this.ball, this,false, 5,7,"a", 50),
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 9,7,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 9,1,"b",50)
     ],
     [
-      new Obstacle(this.ctx, this.map, this.ball, this,1,8,"a",50),
-      new Obstacle(this.ctx,this.map, this.ball, this, 5,7,"b",50),
-      new Obstacle(this.ctx,this.map, this.ball, this, 1,3,"b",50),
-      new Obstacle(this.ctx,this.map, this.ball, this, 4,3,"b",50),
-      new Obstacle(this.ctx,this.map, this.ball, this, 5,1,"b",50)
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 1,8,"a",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 5,8,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 1,4,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 5,4,"b",50),
+      new Obstacle(this.ctx,this.map, this.ball, this, false, 5,1,"b",50)
     ],
   
   ];
@@ -80,10 +80,11 @@ Game.prototype.clickColapse = function(obs,i) {
         this.ball.startMove();
         this.ball.drawBall();
         this.ball.moveBall();
-        this.level[this.levelCounter].forEach(function(obs,i,c){
+        this.level[this.levelCounter].forEach(function(obs,i){
           this.clickColapse(obs,i);
           new Colision(this.ctx,this.ball, obs)
           .bottom()
+ 
           obs.draw(obs.position);
         }.bind(this))
       }.bind(this),
