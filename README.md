@@ -33,4 +33,5 @@ Resolver el laberinto para llegar a la meta.
   - Refactoriza sobre la marcha.
   - Planifica...
   - Tómate las cosas con más calma.
-  - Y no te preocupes tanto con las colisiones...
+  - KEEP KALM AND GIT COMMIT
+  
