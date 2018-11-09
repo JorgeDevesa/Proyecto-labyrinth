@@ -33,5 +33,5 @@ Resolver el laberinto para llegar a la meta.
   - Refactoriza sobre la marcha.
   - Planifica...
   - Tómate las cosas con más calma.
-  - KEEP KALM AND GIT COMMIT
+  - KEEP CALM AND GIT COMMIT
   
