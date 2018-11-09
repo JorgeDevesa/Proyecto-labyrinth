@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Poor+Story');
 body{
     margin:0;
+    background-color:#001926;
 }
+
 #myCanvas{
  margin: 0; 
  border: 1px solid black;
@@ -9,24 +12,48 @@ body{
  position: absolute;
  margin-left:469px;
  margin-top:100px;
+ border: 1px solid #D32F2F;
 }
 div{
-    background-image: url("/images/fondo.jpg");
-    width:504px;
-    height: 650px;
+    background-color: rgba(55, 71, 79,0.7);
+    width:500px;
+    height: 600px;
     position:absolute;
     margin-left:470px;
-    margin-top:100px;
+    margin-top:101px;
 }
 
 
-.start-image{
-    width:200px;
-    height:200px;
+.logo-image{
+    width:150px;
+    height:150px;
     position: absolute;  
-    margin-left: -350px;
-    margin-top: 100px;
+    margin: -30px 170px;
+
 }
-
-
+h1{
+    color:#fafafa ;
+    font-family: 'Poor Story';
+    font-size: 60px;
+    margin: 40px 110px;;
+}
+span{
+    color: #3498DB;
+    /* height:20px; */
+}
+.point{
+    font-size: 90px;
+    font-family: "Helvetica Neue"
+}
+.start{
+    border: none;
+    border-radius:5px;
+    padding:20px;
+    background-color: rgba(71, 78, 82,0.5);
+    color: white;
+    font-size: 30px; 
+    font-family: 'Poor Stor';
+    margin-left: 130px;
+    margin-top: 150px
+}
 

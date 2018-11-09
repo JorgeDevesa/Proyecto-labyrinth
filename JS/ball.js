@@ -6,14 +6,13 @@ function Ball(canvas, game,counter) {
   this.y = 550;
   this.vx = 0;
   this.vy = 0;
-  this.radius = 15;
+  this.radius = 12;
   this.color = "red";
-
 }
 
 Ball.prototype.drawBall = function() {
   this.ctx.beginPath();
-  this.ctx.fillStyle = "#2ECC71";
+  this.ctx.fillStyle = "#03A9F4";
   this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
   this.ctx.fill();
   this.ctx.closePath();
@@ -38,7 +37,6 @@ var SPACE = 32;
 Ball.prototype.startMove = function() {
   document.onkeydown = function(event) {
     if (event.keyCode === SPACE) {
-      this.vy = 0;
       this.vy = -5;
     }
   }.bind(this);
@@ -51,30 +49,33 @@ Ball.prototype.startMove = function() {
 Ball.prototype.reset = function() {           ////////refactorizar en clase a parte  (las dos siguienters)
 
   if(this.game.levelCounter > 0){
-    alert("That's not de goal! Play again?")
+    // alert("That's not de goal! Play again?")
     this.game.counterDown = 0
-    this.game.counterDown += 10;
+    this.game.counterDown += 15;
     this.x = 260;
     this.y = 550;
     this.vx = 0;
     this.vy = 0;
   }
   else{
-    alert("That's not de goal! Play again?")
+    // alert("That's not de goal! Play again?")
 document.location.reload();
   }
-
 };
 
 Ball.prototype.resetCounterDown = function(){
   if(this.game.counterDown === 0){
     this.game.counterDown = 0
-    this.game.counterDown = 10;
+    if (this.game.levelCounter < 3){
+      this.game.counterDown = 15;}
+      else{
+        this.game.counterDown =20}
     this.x = 260;
     this.y = 550;
     this.vx = 0;
     this.vy = 0;
-    // alert("out of time! Play again?")
     
+    // this.obstacle.status = false
+    }
+    // alert("out of time! Play again?")
   }
-}

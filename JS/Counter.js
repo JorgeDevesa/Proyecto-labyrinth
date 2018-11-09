@@ -16,8 +16,7 @@ Counter.prototype.counterDown = function(){
     setInterval(function(){
         this.game.counterDown
         this.game.counterDown--
-
         this.ball.resetCounterDown()
-        console.log(this.game.counterDown)
+        // console.log(this.game.counterDown)
     }.bind(this),1000)
 }
