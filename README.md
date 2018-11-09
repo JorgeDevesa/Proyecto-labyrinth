@@ -1,6 +1,6 @@
-# Proyecto-labyrinth
+# Lab-yrinth
 
-#Objetivo. 
+# Objetivo. 
 Resolver el laberinto para llegar a la meta.
 
 # Instrucciones.
